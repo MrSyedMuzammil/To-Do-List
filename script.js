@@ -18,7 +18,8 @@ function renderTasks(taskArray) {
     const completedClass = task.completed ? "completed" : "";
     listItems += `
       <li class="task-item ${completedClass}" data-index="${i}">
-        ${task.text}
+        <span class="task-text">${task.text}</span>
+        <span class="delete-task-btn" data-index="${i}">&times;</span>
       </li>
     `;
   }
@@ -44,9 +45,26 @@ function toggleTaskCompletion(index) {
   }
 }
 
+function deleteTask(index) {
+  if (tasks[index]) {
+    tasks.splice(index, 1);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    renderTasks(tasks);
+  }
+}
+
 ulEl.addEventListener("click", function (event) {
-  if (event.target && event.target.matches("li.task-item")) {
-    const index = parseInt(event.target.getAttribute("data-index"), 10);
+  const target = event.target;
+
+  if (target.matches(".delete-task-btn")) {
+    const index = parseInt(target.getAttribute("data-index"), 10);
+    deleteTask(index);
+    return;
+  }
+
+  const taskItem = target.closest(".task-item");
+  if (taskItem) {
+    const index = parseInt(taskItem.getAttribute("data-index"), 10);
     toggleTaskCompletion(index);
   }
 });

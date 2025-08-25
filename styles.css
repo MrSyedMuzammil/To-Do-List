@@ -99,6 +99,9 @@ ul {
 }
 
 .task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 16px;
   background-color: var(--surface);
   border-radius: 8px;
@@ -107,7 +110,6 @@ ul {
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s ease, opacity 0.3s ease;
-  overflow-wrap: break-word;
 }
 
 .task-item:hover {
@@ -117,4 +119,31 @@ ul {
 .task-item.completed {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+.task-text {
+  flex-grow: 1;
+  overflow-wrap: break-word;
+  padding-right: 10px;
+}
+
+/* AFTER */
+.delete-task-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  padding: 0 5px;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+.task-item:hover .delete-task-btn {
+  opacity: 1;
+}
+
+.delete-task-btn:hover {
+  color: var(--danger);
 }
