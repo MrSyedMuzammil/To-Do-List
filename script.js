@@ -12,6 +12,15 @@ if (tasksFromLocalStorage) {
 }
 
 function renderTasks(taskArray) {
+  if (taskArray.length === 0) {
+    ulEl.innerHTML = `
+      <div class="empty-state">
+        No tasks yet. Add one above!
+      </div>
+    `;
+    return;
+  }
+
   let listItems = "";
   for (let i = 0; i < taskArray.length; i++) {
     const task = taskArray[i];
@@ -64,10 +73,15 @@ function toggleTaskCompletion(index) {
 }
 
 function deleteTask(index) {
-  if (tasks[index]) {
-    tasks.splice(index, 1);
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    renderTasks(tasks);
+  const taskItem = ulEl.querySelector(`[data-index='${index}']`);
+  if (taskItem) {
+    taskItem.classList.add("task-item--removing");
+
+    setTimeout(() => {
+      tasks.splice(index, 1);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      renderTasks(tasks);
+    }, 400); // Wait for animation to finish
   }
 }
 
