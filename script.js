@@ -14,7 +14,13 @@ if (tasksFromLocalStorage) {
 function renderTasks(taskArray) {
   let listItems = "";
   for (let i = 0; i < taskArray.length; i++) {
-    listItems += `<li>${taskArray[i]}</li>`;
+    const task = taskArray[i];
+    const completedClass = task.completed ? "completed" : "";
+    listItems += `
+      <li class="task-item ${completedClass}" data-index="${i}">
+        ${task.text}
+      </li>
+    `;
   }
   ulEl.innerHTML = listItems;
 }
@@ -24,11 +30,26 @@ function addTask() {
   if (taskText === "") {
     return;
   }
-  tasks.push(taskText);
+  tasks.push({ text: taskText, completed: false });
   inputEl.value = "";
   localStorage.setItem("tasks", JSON.stringify(tasks));
   renderTasks(tasks);
 }
+
+function toggleTaskCompletion(index) {
+  if (tasks[index]) {
+    tasks[index].completed = !tasks[index].completed;
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    renderTasks(tasks);
+  }
+}
+
+ulEl.addEventListener("click", function (event) {
+  if (event.target && event.target.matches("li.task-item")) {
+    const index = parseInt(event.target.getAttribute("data-index"), 10);
+    toggleTaskCompletion(index);
+  }
+});
 
 inputBtn.addEventListener("click", addTask);
 

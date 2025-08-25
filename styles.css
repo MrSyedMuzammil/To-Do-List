@@ -98,11 +98,23 @@ ul {
   margin-top: 24px;
 }
 
-li {
+.task-item {
   padding: 16px;
   background-color: var(--surface);
   border-radius: 8px;
   margin-bottom: 12px;
   font-size: 16px;
   font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  overflow-wrap: break-word;
+}
+
+.task-item:hover {
+  background-color: var(--border);
+}
+
+.task-item.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
 }
