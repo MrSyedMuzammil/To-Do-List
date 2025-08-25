@@ -127,7 +127,6 @@ ul {
   padding-right: 10px;
 }
 
-/* AFTER */
 .delete-task-btn {
   background: none;
   border: none;
@@ -146,4 +145,24 @@ ul {
 
 .delete-task-btn:hover {
   color: var(--danger);
+}
+
+.input-error {
+  animation: shake 0.5s ease;
+  border-color: var(--danger);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
 }

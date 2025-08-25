@@ -31,6 +31,24 @@ function addTask() {
   if (taskText === "") {
     return;
   }
+
+  const isDuplicate = tasks.some(
+    (task) => task.text.toLowerCase() === taskText.toLowerCase()
+  );
+
+  if (isDuplicate) {
+    inputEl.classList.add("input-error");
+    const originalPlaceholder = inputEl.placeholder;
+    inputEl.value = "";
+    inputEl.placeholder = "Task already exists!";
+
+    setTimeout(() => {
+      inputEl.classList.remove("input-error");
+      inputEl.placeholder = originalPlaceholder;
+    }, 1000);
+    return;
+  }
+
   tasks.push({ text: taskText, completed: false });
   inputEl.value = "";
   localStorage.setItem("tasks", JSON.stringify(tasks));
